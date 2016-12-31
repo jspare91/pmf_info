@@ -115,7 +115,8 @@ namespace pmf_2.Controllers
             {
                 db.co_log.Add(co_log);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { the_int_Id = co_log.project_Id });
+               // return RedirectToAction("Index");
             }
 
             ViewBag.project_Id = new SelectList(db.projects, "project_Id", "project_name", co_log.project_Id);
@@ -180,7 +181,8 @@ namespace pmf_2.Controllers
             co_log co_log = db.co_log.Find(id);
             db.co_log.Remove(co_log);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return RedirectToAction("Index", new { the_int_Id = co_log.project_Id });
         }
 
         protected override void Dispose(bool disposing)

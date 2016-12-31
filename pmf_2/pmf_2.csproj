@@ -182,7 +182,6 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\projectsController.cs" />
     <Compile Include="Controllers\proj_manController.cs" />
-    <Compile Include="Controllers\ViewModelController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -303,9 +302,6 @@
     <Content Include="Views\projects\Details.cshtml" />
     <Content Include="Views\projects\Edit.cshtml" />
     <Content Include="Views\projects\Index.cshtml" />
-    <Content Include="Views\co_log\Index_x_project.cshtml" />
-    <Content Include="Views\ViewModel\vm_Index.cshtml" />
-    <Content Include="Views\co_log\vm_Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
