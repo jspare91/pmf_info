@@ -1,0 +1,45 @@
+﻿@model IEnumerable<pmf_2.Models.project>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.project_number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.project_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.proj_man.pm_name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.project_number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.project_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.proj_man.pm_name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.project_Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.project_Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.project_Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="jrj_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="co_log">
+          <Key>
+            <PropertyRef Name="co_Id" />
+          </Key>
+          <Property Name="co_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="project_Id" Type="int" Nullable="false" />
+          <Property Name="co_num" Type="nchar" MaxLength="10" />
+          <Property Name="proc" Type="int" />
+          <Property Name="n_proc" Type="int" />
+          <Property Name="gc_co" Type="nvarchar" MaxLength="50" />
+          <Property Name="description" Type="nvarchar" MaxLength="250" />
+          <Property Name="owed" Type="int" />
+          <Property Name="notes" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="proj_man">
+          <Key>
+            <PropertyRef Name="pm_Id" />
+          </Key>
+          <Property Name="pm_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pm_name" Type="nchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="project">
+          <Key>
+            <PropertyRef Name="project_Id" />
+          </Key>
+          <Property Name="project_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="project_number" Type="int" />
+          <Property Name="project_name" Type="nchar" MaxLength="50" />
+          <Property Name="pm_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_co_log_project">
+          <End Role="project" Type="Self.project" Multiplicity="1" />
+          <End Role="co_log" Type="Self.co_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="project_Id" />
+            </Principal>
+            <Dependent Role="co_log">
+              <PropertyRef Name="project_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_project_proj_man">
+          <End Role="proj_man" Type="Self.proj_man" Multiplicity="1" />
+          <End Role="project" Type="Self.project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proj_man">
+              <PropertyRef Name="pm_Id" />
+            </Principal>
+            <Dependent Role="project">
+              <PropertyRef Name="pm_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="jrj_dbModelStoreContainer">
+          <EntitySet Name="co_log" EntityType="Self.co_log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="proj_man" EntityType="Self.proj_man" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="project" EntityType="Self.project" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_co_log_project" Association="Self.FK_co_log_project">
+            <End Role="project" EntitySet="project" />
+            <End Role="co_log" EntitySet="co_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_project_proj_man" Association="Self.FK_project_proj_man">
+            <End Role="proj_man" EntitySet="proj_man" />
+            <End Role="project" EntitySet="project" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="jrj_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="co_log">
+          <Key>
+            <PropertyRef Name="co_Id" />
+          </Key>
+          <Property Name="co_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="project_Id" Type="Int32" Nullable="false" />
+          <Property Name="co_num" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="proc" Type="Int32" />
+          <Property Name="n_proc" Type="Int32" />
+          <Property Name="gc_co" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="owed" Type="Int32" />
+          <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="project" Relationship="Self.FK_co_log_project" FromRole="co_log" ToRole="project" />
+        </EntityType>
+        <EntityType Name="proj_man">
+          <Key>
+            <PropertyRef Name="pm_Id" />
+          </Key>
+          <Property Name="pm_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pm_name" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="projects" Relationship="jrj_dbModel.FK_project_proj_man" FromRole="proj_man" ToRole="project" />
+        </EntityType>
+        <EntityType Name="project">
+          <Key>
+            <PropertyRef Name="project_Id" />
+          </Key>
+          <Property Name="project_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="project_number" Type="Int32" />
+          <Property Name="project_name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="pm_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="proj_man" Relationship="jrj_dbModel.FK_project_proj_man" FromRole="project" ToRole="proj_man" />
+        </EntityType>
+        <Association Name="FK_co_log_project">
+          <End Role="project" Type="Self.project" Multiplicity="1" />
+          <End Role="co_log" Type="Self.co_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="project_Id" />
+            </Principal>
+            <Dependent Role="co_log">
+              <PropertyRef Name="project_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="jrj_dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="co_log" EntityType="Self.co_log" />
+          <EntitySet Name="proj_man" EntityType="Self.proj_man" />
+          <EntitySet Name="projects" EntityType="Self.project" />
+          <AssociationSet Name="FK_co_log_project" Association="Self.FK_co_log_project">
+            <End Role="project" EntitySet="projects" />
+            <End Role="co_log" EntitySet="co_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_project_proj_man" Association="jrj_dbModel.FK_project_proj_man">
+            <End Role="proj_man" EntitySet="proj_man" />
+            <End Role="project" EntitySet="projects" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_project_proj_man">
+          <End Type="jrj_dbModel.proj_man" Role="proj_man" Multiplicity="1" />
+          <End Type="jrj_dbModel.project" Role="project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proj_man">
+              <PropertyRef Name="pm_Id" />
+            </Principal>
+            <Dependent Role="project">
+              <PropertyRef Name="pm_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="jrj_dbModelStoreContainer" CdmEntityContainer="jrj_dbEntities">
+          <EntitySetMapping Name="co_log">
+            <EntityTypeMapping TypeName="jrj_dbModel.co_log">
+              <MappingFragment StoreEntitySet="co_log">
+                <ScalarProperty Name="co_Id" ColumnName="co_Id" />
+                <ScalarProperty Name="project_Id" ColumnName="project_Id" />
+                <ScalarProperty Name="co_num" ColumnName="co_num" />
+                <ScalarProperty Name="proc" ColumnName="proc" />
+                <ScalarProperty Name="n_proc" ColumnName="n_proc" />
+                <ScalarProperty Name="gc_co" ColumnName="gc_co" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="owed" ColumnName="owed" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="proj_man">
+            <EntityTypeMapping TypeName="jrj_dbModel.proj_man">
+              <MappingFragment StoreEntitySet="proj_man">
+                <ScalarProperty Name="pm_Id" ColumnName="pm_Id" />
+                <ScalarProperty Name="pm_name" ColumnName="pm_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="projects">
+            <EntityTypeMapping TypeName="jrj_dbModel.project">
+              <MappingFragment StoreEntitySet="project">
+                <ScalarProperty Name="project_Id" ColumnName="project_Id" />
+                <ScalarProperty Name="project_number" ColumnName="project_number" />
+                <ScalarProperty Name="project_name" ColumnName="project_name" />
+                <ScalarProperty Name="pm_Id" ColumnName="pm_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

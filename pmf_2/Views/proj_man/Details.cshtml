@@ -1,0 +1,26 @@
+﻿@model pmf_2.Models.proj_man
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>proj_man</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.pm_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pm_name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.pm_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
