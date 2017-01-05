@@ -7,11 +7,11 @@
 <h2> @ViewBag.project_name</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new { proj_ID = @ViewBag.project_Id })
 </p>
 <div class="form-group">
     <input type="hidden" id="project_Id" name="project_Id" value="@ViewBag.project_Id" />
-    </div>
+    
 </div>
 <table class="table">
     <tr>
