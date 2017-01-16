@@ -26,7 +26,8 @@ namespace pmf_2.Models
         }
     
         public virtual DbSet<co_log> co_log { get; set; }
-        public virtual DbSet<proj_man> proj_man { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<user_project> user_project { get; set; }
         public virtual DbSet<project> projects { get; set; }
     }
 }

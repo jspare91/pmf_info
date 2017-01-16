@@ -181,14 +181,17 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\projectsController.cs" />
-    <Compile Include="Controllers\proj_manController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="Controllers\user_projectController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
+    <Compile Include="Models\AspNetUser.cs">
+      <DependentUpon>co_log.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\co_log.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -202,12 +205,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>co_log.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\co_log1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>co_log.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\project.cs">
       <DependentUpon>co_log.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\proj_man.cs">
+    <Compile Include="Models\user_project.cs">
       <DependentUpon>co_log.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -281,22 +289,22 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\proj_man\Create.cshtml" />
-    <Content Include="Views\proj_man\Delete.cshtml" />
-    <Content Include="Views\proj_man\Details.cshtml" />
-    <Content Include="Views\proj_man\Edit.cshtml" />
-    <Content Include="Views\proj_man\Index.cshtml" />
     <Content Include="Views\co_log\Create.cshtml" />
     <Content Include="Views\co_log\Delete.cshtml" />
     <Content Include="Views\co_log\Details.cshtml" />
     <Content Include="Views\co_log\Edit.cshtml" />
     <Content Include="Views\co_log\Index.cshtml" />
+    <Content Include="Web.config" />
     <Content Include="Views\projects\Create.cshtml" />
     <Content Include="Views\projects\Delete.cshtml" />
     <Content Include="Views\projects\Details.cshtml" />
     <Content Include="Views\projects\Edit.cshtml" />
     <Content Include="Views\projects\Index.cshtml" />
-    <Content Include="Web.config" />
+    <Content Include="Views\user_project\Create.cshtml" />
+    <Content Include="Views\user_project\Delete.cshtml" />
+    <Content Include="Views\user_project\Details.cshtml" />
+    <Content Include="Views\user_project\Edit.cshtml" />
+    <Content Include="Views\user_project\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

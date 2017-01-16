@@ -17,7 +17,7 @@ namespace pmf_2.Controllers
         // GET: projects
         public ActionResult Index()
         {
-            var projects = db.projects.Include(p => p.proj_man);
+            var projects = db.projects.Include(p => p.AspNetUser);
             return View(projects.ToList());
         }
 
@@ -39,7 +39,7 @@ namespace pmf_2.Controllers
         // GET: projects/Create
         public ActionResult Create()
         {
-            ViewBag.pm_Id = new SelectList(db.proj_man, "pm_Id", "pm_name");
+            ViewBag.pm_Id = new SelectList(db.AspNetUsers, "Id", "Email");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace pmf_2.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.pm_Id = new SelectList(db.proj_man, "pm_Id", "pm_name", project.pm_Id);
+            ViewBag.pm_Id = new SelectList(db.AspNetUsers, "Id", "Email", project.pm_Id);
             return View(project);
         }
 
@@ -73,7 +73,7 @@ namespace pmf_2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.pm_Id = new SelectList(db.proj_man, "pm_Id", "pm_name", project.pm_Id);
+            ViewBag.pm_Id = new SelectList(db.AspNetUsers, "Id", "Email", project.pm_Id);
             return View(project);
         }
 
@@ -90,7 +90,7 @@ namespace pmf_2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.pm_Id = new SelectList(db.proj_man, "pm_Id", "pm_name", project.pm_Id);
+            ViewBag.pm_Id = new SelectList(db.AspNetUsers, "Id", "Email", project.pm_Id);
             return View(project);
         }
 

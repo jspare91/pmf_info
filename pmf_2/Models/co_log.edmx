@@ -5,6 +5,23 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="jrj_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
         <EntityType Name="co_log">
           <Key>
             <PropertyRef Name="co_Id" />
@@ -19,13 +36,6 @@
           <Property Name="owed" Type="int" />
           <Property Name="notes" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="proj_man">
-          <Key>
-            <PropertyRef Name="pm_Id" />
-          </Key>
-          <Property Name="pm_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="pm_name" Type="nchar" MaxLength="25" />
-        </EntityType>
         <EntityType Name="project">
           <Key>
             <PropertyRef Name="project_Id" />
@@ -33,7 +43,15 @@
           <Property Name="project_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="project_number" Type="int" />
           <Property Name="project_name" Type="nchar" MaxLength="50" />
-          <Property Name="pm_Id" Type="int" Nullable="false" />
+          <Property Name="pm_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user_project">
+          <Key>
+            <PropertyRef Name="user_proj_Id" />
+          </Key>
+          <Property Name="user_proj_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="project_Id" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_co_log_project">
           <End Role="project" Type="Self.project" Multiplicity="1" />
@@ -47,29 +65,62 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_project_proj_man">
-          <End Role="proj_man" Type="Self.proj_man" Multiplicity="1" />
+        <Association Name="FK_project_ToASPNetUser">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="project" Type="Self.project" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="proj_man">
-              <PropertyRef Name="pm_Id" />
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="project">
               <PropertyRef Name="pm_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_user_proj_ToTable_AspNetUser">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="user_project" Type="Self.user_project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="user_project">
+              <PropertyRef Name="user_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_proj_ToTable_project">
+          <End Role="project" Type="Self.project" Multiplicity="1" />
+          <End Role="user_project" Type="Self.user_project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="project_Id" />
+            </Principal>
+            <Dependent Role="user_project">
+              <PropertyRef Name="project_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="jrj_dbModelStoreContainer">
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="co_log" EntityType="Self.co_log" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="proj_man" EntityType="Self.proj_man" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="project" EntityType="Self.project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_project" EntityType="Self.user_project" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_co_log_project" Association="Self.FK_co_log_project">
             <End Role="project" EntitySet="project" />
             <End Role="co_log" EntitySet="co_log" />
           </AssociationSet>
-          <AssociationSet Name="FK_project_proj_man" Association="Self.FK_project_proj_man">
-            <End Role="proj_man" EntitySet="proj_man" />
+          <AssociationSet Name="FK_project_ToASPNetUser" Association="Self.FK_project_ToASPNetUser">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="project" EntitySet="project" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_proj_ToTable_AspNetUser" Association="Self.FK_user_proj_ToTable_AspNetUser">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="user_project" EntitySet="user_project" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_proj_ToTable_project" Association="Self.FK_user_proj_ToTable_project">
+            <End Role="project" EntitySet="project" />
+            <End Role="user_project" EntitySet="user_project" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -89,16 +140,71 @@
           <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="owed" Type="Int32" />
           <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="project" Relationship="Self.FK_co_log_project" FromRole="co_log" ToRole="project" />
+          <NavigationProperty Name="project" Relationship="jrj_dbModel.FK_co_log_project" FromRole="co_log" ToRole="project" />
         </EntityType>
-        <EntityType Name="proj_man">
+        <EntityContainer Name="jrj_dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="co_log" EntityType="Self.co_log" />
+          <EntitySet Name="AspNetUsers" EntityType="jrj_dbModel.AspNetUser" />
+          <EntitySet Name="user_project" EntityType="jrj_dbModel.user_project" />
+          <AssociationSet Name="FK_user_proj_ToTable_AspNetUser" Association="jrj_dbModel.FK_user_proj_ToTable_AspNetUser">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="user_project" EntitySet="user_project" />
+          </AssociationSet>
+          <EntitySet Name="projects" EntityType="jrj_dbModel.project" />
+          <AssociationSet Name="FK_project_ToASPNetUser" Association="jrj_dbModel.FK_project_ToASPNetUser">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="project" EntitySet="projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_co_log_project" Association="jrj_dbModel.FK_co_log_project">
+            <End Role="project" EntitySet="projects" />
+            <End Role="co_log" EntitySet="co_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_proj_ToTable_project" Association="jrj_dbModel.FK_user_proj_ToTable_project">
+            <End Role="project" EntitySet="projects" />
+            <End Role="user_project" EntitySet="user_project" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AspNetUser">
           <Key>
-            <PropertyRef Name="pm_Id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="pm_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="pm_name" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="projects" Relationship="jrj_dbModel.FK_project_proj_man" FromRole="proj_man" ToRole="project" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="user_project" Relationship="jrj_dbModel.FK_user_proj_ToTable_AspNetUser" FromRole="AspNetUser" ToRole="user_project" />
+          <NavigationProperty Name="projects" Relationship="jrj_dbModel.FK_project_ToASPNetUser" FromRole="AspNetUser" ToRole="project" />
         </EntityType>
+        <EntityType Name="user_project">
+          <Key>
+            <PropertyRef Name="user_proj_Id" />
+          </Key>
+          <Property Name="user_proj_Id" Type="Int32" Nullable="false" />
+          <Property Name="user_Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="project_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="jrj_dbModel.FK_user_proj_ToTable_AspNetUser" FromRole="user_project" ToRole="AspNetUser" />
+          <NavigationProperty Name="project" Relationship="jrj_dbModel.FK_user_proj_ToTable_project" FromRole="user_project" ToRole="project" />
+        </EntityType>
+        <Association Name="FK_user_proj_ToTable_AspNetUser">
+          <End Type="jrj_dbModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="jrj_dbModel.user_project" Role="user_project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="user_project">
+              <PropertyRef Name="user_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="project">
           <Key>
             <PropertyRef Name="project_Id" />
@@ -106,12 +212,26 @@
           <Property Name="project_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="project_number" Type="Int32" />
           <Property Name="project_name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="pm_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="proj_man" Relationship="jrj_dbModel.FK_project_proj_man" FromRole="project" ToRole="proj_man" />
+          <Property Name="pm_Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="jrj_dbModel.FK_project_ToASPNetUser" FromRole="project" ToRole="AspNetUser" />
+          <NavigationProperty Name="co_log" Relationship="jrj_dbModel.FK_co_log_project" FromRole="project" ToRole="co_log" />
+          <NavigationProperty Name="user_project" Relationship="jrj_dbModel.FK_user_proj_ToTable_project" FromRole="project" ToRole="user_project" />
         </EntityType>
+        <Association Name="FK_project_ToASPNetUser">
+          <End Type="jrj_dbModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="jrj_dbModel.project" Role="project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="project">
+              <PropertyRef Name="pm_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_co_log_project">
-          <End Role="project" Type="Self.project" Multiplicity="1" />
-          <End Role="co_log" Type="Self.co_log" Multiplicity="*" />
+          <End Type="jrj_dbModel.project" Role="project" Multiplicity="1" />
+          <End Type="jrj_dbModel.co_log" Role="co_log" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="project">
               <PropertyRef Name="project_Id" />
@@ -121,28 +241,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="jrj_dbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="co_log" EntityType="Self.co_log" />
-          <EntitySet Name="proj_man" EntityType="Self.proj_man" />
-          <EntitySet Name="projects" EntityType="Self.project" />
-          <AssociationSet Name="FK_co_log_project" Association="Self.FK_co_log_project">
-            <End Role="project" EntitySet="projects" />
-            <End Role="co_log" EntitySet="co_log" />
-          </AssociationSet>
-          <AssociationSet Name="FK_project_proj_man" Association="jrj_dbModel.FK_project_proj_man">
-            <End Role="proj_man" EntitySet="proj_man" />
-            <End Role="project" EntitySet="projects" />
-          </AssociationSet>
-        </EntityContainer>
-        <Association Name="FK_project_proj_man">
-          <End Type="jrj_dbModel.proj_man" Role="proj_man" Multiplicity="1" />
-          <End Type="jrj_dbModel.project" Role="project" Multiplicity="*" />
+        <Association Name="FK_user_proj_ToTable_project">
+          <End Type="jrj_dbModel.project" Role="project" Multiplicity="1" />
+          <End Type="jrj_dbModel.user_project" Role="user_project" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="proj_man">
-              <PropertyRef Name="pm_Id" />
+            <Principal Role="project">
+              <PropertyRef Name="project_Id" />
             </Principal>
-            <Dependent Role="project">
-              <PropertyRef Name="pm_Id" />
+            <Dependent Role="user_project">
+              <PropertyRef Name="project_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -167,21 +274,40 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="proj_man">
-            <EntityTypeMapping TypeName="jrj_dbModel.proj_man">
-              <MappingFragment StoreEntitySet="proj_man">
-                <ScalarProperty Name="pm_Id" ColumnName="pm_Id" />
-                <ScalarProperty Name="pm_name" ColumnName="pm_name" />
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="jrj_dbModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_project">
+            <EntityTypeMapping TypeName="jrj_dbModel.user_project">
+              <MappingFragment StoreEntitySet="user_project">
+                <ScalarProperty Name="project_Id" ColumnName="project_Id" />
+                <ScalarProperty Name="user_Id" ColumnName="user_Id" />
+                <ScalarProperty Name="user_proj_Id" ColumnName="user_proj_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="projects">
             <EntityTypeMapping TypeName="jrj_dbModel.project">
               <MappingFragment StoreEntitySet="project">
-                <ScalarProperty Name="project_Id" ColumnName="project_Id" />
-                <ScalarProperty Name="project_number" ColumnName="project_number" />
-                <ScalarProperty Name="project_name" ColumnName="project_name" />
                 <ScalarProperty Name="pm_Id" ColumnName="pm_Id" />
+                <ScalarProperty Name="project_name" ColumnName="project_name" />
+                <ScalarProperty Name="project_number" ColumnName="project_number" />
+                <ScalarProperty Name="project_Id" ColumnName="project_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
