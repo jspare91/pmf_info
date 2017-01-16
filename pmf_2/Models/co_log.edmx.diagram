@@ -5,11 +5,14 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="31932f4facb64b82871e587237308dd2" Name="Diagram1">
-        <EntityTypeShape EntityType="jrj_dbModel.co_log" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="jrj_dbModel.proj_man" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="jrj_dbModel.project" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
-        <AssociationConnector Association="jrj_dbModel.FK_co_log_project" ManuallyRouted="false" />
-        <AssociationConnector Association="jrj_dbModel.FK_project_proj_man" />
+        <EntityTypeShape EntityType="jrj_dbModel.co_log" Width="1.5" PointX="7.125" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="jrj_dbModel.AspNetUser" Width="1.5" PointX="1.125" PointY="0.5" />
+        <EntityTypeShape EntityType="jrj_dbModel.user_project" Width="1.5" PointX="3.25" PointY="3" />
+        <AssociationConnector Association="jrj_dbModel.FK_user_proj_ToTable_AspNetUser" />
+        <EntityTypeShape EntityType="jrj_dbModel.project" Width="1.5" PointX="5" PointY="0.5" />
+        <AssociationConnector Association="jrj_dbModel.FK_project_ToASPNetUser" />
+        <AssociationConnector Association="jrj_dbModel.FK_co_log_project" />
+        <AssociationConnector Association="jrj_dbModel.FK_user_proj_ToTable_project" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

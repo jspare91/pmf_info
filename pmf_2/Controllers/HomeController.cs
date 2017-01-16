@@ -15,7 +15,6 @@ namespace pmf_2.Controllers
         public ActionResult Index()
         {
             ViewBag.project_Id = new SelectList(db.projects, "project_Id", "project_name");
-//ViewBag.pm_Id = new SelectList(db.proj_man, "pm_Id", "pm_name");
             return View();
         }
 

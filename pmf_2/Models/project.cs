@@ -14,11 +14,22 @@ namespace pmf_2.Models
     
     public partial class project
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public project()
+        {
+            this.co_log = new HashSet<co_log>();
+            this.user_project = new HashSet<user_project>();
+        }
+    
         public int project_Id { get; set; }
         public Nullable<int> project_number { get; set; }
         public string project_name { get; set; }
-        public int pm_Id { get; set; }
+        public string pm_Id { get; set; }
     
-        public virtual proj_man proj_man { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<co_log> co_log { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<user_project> user_project { get; set; }
     }
 }
