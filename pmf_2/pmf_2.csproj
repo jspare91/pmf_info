@@ -210,6 +210,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>co_log.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\project.cs">

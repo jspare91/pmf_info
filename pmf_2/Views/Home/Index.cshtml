@@ -1,4 +1,4 @@
-﻿@model pmf_2.Models.project
+﻿@model pmf_2.Models.HomeViewModel
 @{
     ViewBag.Title = "Home Page";
 }
@@ -12,27 +12,32 @@
         <table>
             <tr>
                 <td width="200">
-                    @Html.LabelFor(model => model.project_name, "project_name", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @*@Html.LabelFor(model => model.project_name, "project_name", htmlAttributes: new { @class = "control-label col-md-2" })*@
                 </td>
                 <td>
-                    @Html.DropDownList("project_Id", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.project_Id, "", new { @class = "text-danger" })
+                    @Html.DropDownListFor(n => n.SelectedProjectID, Model.ProjectList, "Select Project", new { onchange = "this.form.submit();" })
+                    @*@Html.DropDownList("project_Id", null, htmlAttributes: new { @class = "form-control" })*@
+                    @*@Html.ValidationMessageFor(model => model.project_Id, "", new { @class = "text-danger" })*@
                 </td>
-                <td width="200">
+                @*<td width="200">
                     <input id="btnRefresh" type="submit" value="Submit" class="btn-default" style="border:none; color:#428bca; fill-opacity:inherit" />
-                </td>
+                </td>*@
             </tr>
             <tr></tr>
             <tr></tr>
             <tr></tr>
             <tr></tr>
         </table>
-    <div class="col-md-4">
-        @Html.ActionLink("Change Order Log", "Index", "co_log", "null", "null")
-        <br />
-        @Html.ActionLink("User Project", "Index", "user_project", "null", "null")
-        <br />
-        @Html.ActionLink("Projects", "Index", "projects", "null", "null")
-   </div>
     }
+    <div class="col-md-4">
+        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+        {
+                @Html.ActionLink("Change Order Log", "Index", "co_log", "null", "null")
+                <br />
+                @Html.ActionLink("User Project", "Index", "user_project", "null", "null")
+                <br />
+                @Html.ActionLink("Projects", "Index", "projects", "null", "null")
+        }
+   </div>
+
 </div>

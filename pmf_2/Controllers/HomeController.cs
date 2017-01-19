@@ -14,8 +14,10 @@ namespace pmf_2.Controllers
         private jrj_dbEntities db = new jrj_dbEntities();
         public ActionResult Index()
         {
-            ViewBag.project_Id = new SelectList(db.projects, "project_Id", "project_name");
-            return View();
+            var model = new HomeViewModel();
+            model.ProjectList = new SelectList(db.projects, "project_Id", "project_name", 1);
+            model.SelectedProjectID = 0;
+            return View(model);
         }
 
         public ActionResult About()
