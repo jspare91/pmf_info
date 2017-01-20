@@ -24,7 +24,7 @@ namespace pmf_2.Controllers
                 var the_proj = from n_u in db.projects select n_u;
                 the_proj= the_proj.Where(n_u =>n_u.project_Id.Equals (int_Id));
                 the_cos = the_cos.Where(n_mb => n_mb.project_Id.Equals(int_Id));
-                the_cos.Include(c => c.project);
+                //the_cos.Include(c => c.project);
                 ViewBag.project_Id = int_Id;
                 var the_proj_name = the_proj.ToArray();
                 string t_p_n = the_proj_name[0].project_name.ToString();
@@ -37,14 +37,19 @@ namespace pmf_2.Controllers
                 {
                     var the_cos = from n_mb in db.co_log select n_mb;
                     int int_Id = Convert.ToInt32(the_int_Id);
+                    var the_proj = from n_u in db.projects select n_u;
+                    the_proj = the_proj.Where(n_u => n_u.project_Id.Equals(int_Id));
                     the_cos = the_cos.Where(n_mb => n_mb.project_Id.Equals(int_Id));
-                    the_cos.Include(c => c.project);
+                    //the_cos.Include(c => c.project);
                     ViewBag.project_Id = int_Id;
+                    var the_proj_name = the_proj.ToArray();
+                    string t_p_n = the_proj_name[0].project_name.ToString();
+                    ViewBag.project_name = t_p_n;
                     return View(the_cos.ToList());
                 }
                 else
                 {
-                    var co_log = db.co_log.Include(c => c.project);
+                    var co_log = db.co_log;
                     return View(co_log.ToList());
                 }
             }

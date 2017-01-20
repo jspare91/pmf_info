@@ -7,73 +7,126 @@
 <h2> @ViewBag.project_name</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create", new { proj_ID = @ViewBag.project_Id })
+    @if (User.IsInRole("can write"))
+    {
+        @Html.ActionLink("Create New", "Create", new { proj_ID = @ViewBag.project_Id }) 
+    }
 </p>
 <div class="form-group">
     <input type="hidden" id="project_Id" name="project_Id" value="@ViewBag.project_Id" />
     
 </div>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.co_num)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.proc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.n_proc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.gc_co)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.owed)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.notes)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.project.project_name)
-        </th>*@
-        <th></th>
-    </tr>
+@if (User.IsInRole("can write"))
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.co_num)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.proc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.n_proc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.gc_co)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.owed)
+            </th>
+        
+                <th>
+                    @Html.DisplayNameFor(model => model.notes)
+                </th>
+           <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.co_num)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.proc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.n_proc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.gc_co)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.owed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.notes)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.project.project_name)
-        </td>*@
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.co_Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.co_Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.co_Id })
-        </td>
-    </tr>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.co_num)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.proc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.n_proc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.gc_co)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.owed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.notes)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.co_Id }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.co_Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.co_Id })
+            </td>
+        </tr>
+    }
+    </table>
 }
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.co_num)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.proc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.n_proc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.gc_co)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.owed)
+            </th>
+            <th></th>
+        </tr>
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.co_num)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.proc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.n_proc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.gc_co)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.owed)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.co_Id })
+                </td>
+            </tr>
+        }
+    </table>
+}
