@@ -36,7 +36,7 @@
           <Property Name="owed" Type="int" />
           <Property Name="notes" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="project">
+        <EntityType Name="projects">
           <Key>
             <PropertyRef Name="project_Id" />
           </Key>
@@ -49,15 +49,15 @@
           <Key>
             <PropertyRef Name="user_proj_Id" />
           </Key>
-          <Property Name="user_proj_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_proj_Id" Type="int" Nullable="false" />
           <Property Name="user_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="project_Id" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_co_log_project">
-          <End Role="project" Type="Self.project" Multiplicity="1" />
+          <End Role="projects" Type="Self.projects" Multiplicity="1" />
           <End Role="co_log" Type="Self.co_log" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="project">
+            <Principal Role="projects">
               <PropertyRef Name="project_Id" />
             </Principal>
             <Dependent Role="co_log">
@@ -67,12 +67,12 @@
         </Association>
         <Association Name="FK_project_ToASPNetUser">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="project" Type="Self.project" Multiplicity="*" />
+          <End Role="projects" Type="Self.projects" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="project">
+            <Dependent Role="projects">
               <PropertyRef Name="pm_Id" />
             </Dependent>
           </ReferentialConstraint>
@@ -90,10 +90,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_user_proj_ToTable_project">
-          <End Role="project" Type="Self.project" Multiplicity="1" />
+          <End Role="projects" Type="Self.projects" Multiplicity="1" />
           <End Role="user_project" Type="Self.user_project" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="project">
+            <Principal Role="projects">
               <PropertyRef Name="project_Id" />
             </Principal>
             <Dependent Role="user_project">
@@ -104,22 +104,22 @@
         <EntityContainer Name="jrj_dbModelStoreContainer">
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="co_log" EntityType="Self.co_log" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="project" EntityType="Self.project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="projects" EntityType="Self.projects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user_project" EntityType="Self.user_project" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_co_log_project" Association="Self.FK_co_log_project">
-            <End Role="project" EntitySet="project" />
+            <End Role="projects" EntitySet="projects" />
             <End Role="co_log" EntitySet="co_log" />
           </AssociationSet>
           <AssociationSet Name="FK_project_ToASPNetUser" Association="Self.FK_project_ToASPNetUser">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="project" EntitySet="project" />
+            <End Role="projects" EntitySet="projects" />
           </AssociationSet>
           <AssociationSet Name="FK_user_proj_ToTable_AspNetUser" Association="Self.FK_user_proj_ToTable_AspNetUser">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="user_project" EntitySet="user_project" />
           </AssociationSet>
           <AssociationSet Name="FK_user_proj_ToTable_project" Association="Self.FK_user_proj_ToTable_project">
-            <End Role="project" EntitySet="project" />
+            <End Role="projects" EntitySet="projects" />
             <End Role="user_project" EntitySet="user_project" />
           </AssociationSet>
         </EntityContainer>
@@ -163,7 +163,7 @@
             <End Role="project" EntitySet="projects" />
             <End Role="user_project" EntitySet="user_project" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="AspNetUser">
           <Key>
             <PropertyRef Name="Id" />
@@ -253,7 +253,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -303,7 +303,7 @@
           </EntitySetMapping>
           <EntitySetMapping Name="projects">
             <EntityTypeMapping TypeName="jrj_dbModel.project">
-              <MappingFragment StoreEntitySet="project">
+              <MappingFragment StoreEntitySet="projects">
                 <ScalarProperty Name="pm_Id" ColumnName="pm_Id" />
                 <ScalarProperty Name="project_name" ColumnName="project_name" />
                 <ScalarProperty Name="project_number" ColumnName="project_number" />
