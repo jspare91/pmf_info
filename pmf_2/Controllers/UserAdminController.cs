@@ -14,7 +14,7 @@ using System.Web.Mvc;
 
 namespace pmf_2.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class UsersAdminController : Controller
     {
         public UsersAdminController()

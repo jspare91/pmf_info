@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace pmf_2.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class RolesAdminController : Controller
     {
         public RolesAdminController()
