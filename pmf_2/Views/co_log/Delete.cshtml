@@ -58,15 +58,16 @@
         <dd>
             @Html.DisplayFor(model => model.owed)
         </dd>
+        @if (User.IsInRole("can write"))
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.notes)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.notes)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.notes)
-        </dd>
-
+            <dd>
+                @Html.DisplayFor(model => model.notes)
+            </dd>
+        }
         <dt>
             @Html.DisplayNameFor(model => model.project.project_name)
         </dt>

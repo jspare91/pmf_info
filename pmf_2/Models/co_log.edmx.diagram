@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="31932f4facb64b82871e587237308dd2" Name="Diagram1" ZoomLevel="91">
-        <EntityTypeShape EntityType="jrj_dbModel.co_log" Width="1.5" PointX="7.125" PointY="2.5" IsExpanded="true" />
+      <Diagram DiagramId="31932f4facb64b82871e587237308dd2" Name="Diagram1">
+        <EntityTypeShape EntityType="jrj_dbModel.co_log" Width="1.5" PointX="6.875" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="jrj_dbModel.AspNetUser" Width="1.5" PointX="1.125" PointY="0.5" />
-        <EntityTypeShape EntityType="jrj_dbModel.user_project" Width="1.5" PointX="3.25" PointY="3" />
+        <EntityTypeShape EntityType="jrj_dbModel.user_project" Width="1.5" PointX="3.125" PointY="2.25" />
         <AssociationConnector Association="jrj_dbModel.FK_user_proj_ToTable_AspNetUser" />
-        <EntityTypeShape EntityType="jrj_dbModel.project" Width="1.5" PointX="5" PointY="0.5" />
+        <EntityTypeShape EntityType="jrj_dbModel.project" Width="1.5" PointX="3.375" PointY="5.125" />
         <AssociationConnector Association="jrj_dbModel.FK_project_ToASPNetUser" />
         <AssociationConnector Association="jrj_dbModel.FK_co_log_project" />
         <AssociationConnector Association="jrj_dbModel.FK_user_proj_ToTable_project" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
