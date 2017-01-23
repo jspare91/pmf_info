@@ -4,126 +4,126 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="jrj_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="AspNetUsers">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="256" />
-          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
-          <Property Name="PasswordHash" Type="nvarchar(max)" />
-          <Property Name="SecurityStamp" Type="nvarchar(max)" />
-          <Property Name="PhoneNumber" Type="nvarchar(max)" />
-          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
-          <Property Name="LockoutEndDateUtc" Type="datetime" />
-          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-        </EntityType>
-        <EntityType Name="co_log">
-          <Key>
-            <PropertyRef Name="co_Id" />
-          </Key>
-          <Property Name="co_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="project_Id" Type="int" Nullable="false" />
-          <Property Name="co_num" Type="nchar" MaxLength="10" />
-          <Property Name="proc" Type="int" />
-          <Property Name="n_proc" Type="int" />
-          <Property Name="gc_co" Type="nvarchar" MaxLength="50" />
-          <Property Name="description" Type="nvarchar" MaxLength="250" />
-          <Property Name="owed" Type="int" />
-          <Property Name="notes" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="project">
-          <Key>
-            <PropertyRef Name="project_Id" />
-          </Key>
-          <Property Name="project_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="project_number" Type="int" />
-          <Property Name="project_name" Type="nchar" MaxLength="50" />
-          <Property Name="pm_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-        </EntityType>
-        <EntityType Name="user_project">
-          <Key>
-            <PropertyRef Name="user_proj_Id" />
-          </Key>
-          <Property Name="user_proj_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="user_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="project_Id" Type="int" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_co_log_project">
-          <End Role="project" Type="Self.project" Multiplicity="1" />
-          <End Role="co_log" Type="Self.co_log" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="project">
-              <PropertyRef Name="project_Id" />
-            </Principal>
-            <Dependent Role="co_log">
-              <PropertyRef Name="project_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_project_ToASPNetUser">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="project" Type="Self.project" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="project">
-              <PropertyRef Name="pm_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_user_proj_ToTable_AspNetUser">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="user_project" Type="Self.user_project" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="user_project">
-              <PropertyRef Name="user_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_user_proj_ToTable_project">
-          <End Role="project" Type="Self.project" Multiplicity="1" />
-          <End Role="user_project" Type="Self.user_project" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="project">
-              <PropertyRef Name="project_Id" />
-            </Principal>
-            <Dependent Role="user_project">
-              <PropertyRef Name="project_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="jrj_dbModelStoreContainer">
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="co_log" EntityType="Self.co_log" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="project" EntityType="Self.project" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="user_project" EntityType="Self.user_project" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_co_log_project" Association="Self.FK_co_log_project">
-            <End Role="project" EntitySet="project" />
-            <End Role="co_log" EntitySet="co_log" />
-          </AssociationSet>
-          <AssociationSet Name="FK_project_ToASPNetUser" Association="Self.FK_project_ToASPNetUser">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="project" EntitySet="project" />
-          </AssociationSet>
-          <AssociationSet Name="FK_user_proj_ToTable_AspNetUser" Association="Self.FK_user_proj_ToTable_AspNetUser">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="user_project" EntitySet="user_project" />
-          </AssociationSet>
-          <AssociationSet Name="FK_user_proj_ToTable_project" Association="Self.FK_user_proj_ToTable_project">
-            <End Role="project" EntitySet="project" />
-            <End Role="user_project" EntitySet="user_project" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema></edmx:StorageModels>
+    <Schema Namespace="jrj_dbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="jrj_dbModelStoreContainer">
+    <EntitySet Name="co_log" EntityType="jrj_dbModel.Store.co_log" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetUsers" EntityType="jrj_dbModel.Store.AspNetUsers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="user_project" EntityType="jrj_dbModel.Store.user_project" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="projects" EntityType="jrj_dbModel.Store.projects" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_user_proj_ToTable_AspNetUser" Association="jrj_dbModel.Store.FK_user_proj_ToTable_AspNetUser">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="user_project" EntitySet="user_project" />
+    </AssociationSet>
+    <AssociationSet Name="FK_project_ToASPNetUser" Association="jrj_dbModel.Store.FK_project_ToASPNetUser">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="project" EntitySet="projects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_co_log_project" Association="jrj_dbModel.Store.FK_co_log_project">
+      <End Role="project" EntitySet="projects" />
+      <End Role="co_log" EntitySet="co_log" />
+    </AssociationSet>
+    <AssociationSet Name="FK_user_proj_ToTable_project" Association="jrj_dbModel.Store.FK_user_proj_ToTable_project">
+      <End Role="project" EntitySet="projects" />
+      <End Role="user_project" EntitySet="user_project" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="co_log">
+    <Key>
+      <PropertyRef Name="co_Id" />
+    </Key>
+    <Property Name="co_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="project_Id" Type="int" Nullable="false" />
+    <Property Name="co_num" Type="nchar" Nullable="true" MaxLength="10" />
+    <Property Name="proc" Type="int" Nullable="true" />
+    <Property Name="n_proc" Type="int" Nullable="true" />
+    <Property Name="gc_co" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="description" Type="nvarchar" Nullable="true" MaxLength="250" />
+    <Property Name="owed" Type="int" Nullable="true" />
+    <Property Name="notes" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="Email" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" Nullable="true" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="user_project">
+    <Key>
+      <PropertyRef Name="user_proj_Id" />
+    </Key>
+    <Property Name="user_proj_Id" Type="int" Nullable="false" />
+    <Property Name="user_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="project_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="projects">
+    <Key>
+      <PropertyRef Name="project_Id" />
+    </Key>
+    <Property Name="project_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="project_number" Type="int" Nullable="true" />
+    <Property Name="project_name" Type="nchar" Nullable="true" MaxLength="50" />
+    <Property Name="pm_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+  </EntityType>
+  <Association Name="FK_user_proj_ToTable_AspNetUser">
+    <End Role="AspNetUser" Type="jrj_dbModel.Store.AspNetUsers" Multiplicity="1" />
+    <End Role="user_project" Type="jrj_dbModel.Store.user_project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="user_project">
+        <PropertyRef Name="user_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_project_ToASPNetUser">
+    <End Role="AspNetUser" Type="jrj_dbModel.Store.AspNetUsers" Multiplicity="1" />
+    <End Role="project" Type="jrj_dbModel.Store.projects" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="project">
+        <PropertyRef Name="pm_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_co_log_project">
+    <End Role="project" Type="jrj_dbModel.Store.projects" Multiplicity="1" />
+    <End Role="co_log" Type="jrj_dbModel.Store.co_log" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="project">
+        <PropertyRef Name="project_Id" />
+      </Principal>
+      <Dependent Role="co_log">
+        <PropertyRef Name="project_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_user_proj_ToTable_project">
+    <End Role="project" Type="jrj_dbModel.Store.projects" Multiplicity="1" />
+    <End Role="user_project" Type="jrj_dbModel.Store.user_project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="project">
+        <PropertyRef Name="project_Id" />
+      </Principal>
+      <Dependent Role="user_project">
+        <PropertyRef Name="project_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="jrj_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -257,63 +257,62 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="jrj_dbModelStoreContainer" CdmEntityContainer="jrj_dbEntities">
-          <EntitySetMapping Name="co_log">
-            <EntityTypeMapping TypeName="jrj_dbModel.co_log">
-              <MappingFragment StoreEntitySet="co_log">
-                <ScalarProperty Name="co_Id" ColumnName="co_Id" />
-                <ScalarProperty Name="project_Id" ColumnName="project_Id" />
-                <ScalarProperty Name="co_num" ColumnName="co_num" />
-                <ScalarProperty Name="proc" ColumnName="proc" />
-                <ScalarProperty Name="n_proc" ColumnName="n_proc" />
-                <ScalarProperty Name="gc_co" ColumnName="gc_co" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="owed" ColumnName="owed" />
-                <ScalarProperty Name="notes" ColumnName="notes" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="jrj_dbModel.AspNetUser">
-              <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="user_project">
-            <EntityTypeMapping TypeName="jrj_dbModel.user_project">
-              <MappingFragment StoreEntitySet="user_project">
-                <ScalarProperty Name="project_Id" ColumnName="project_Id" />
-                <ScalarProperty Name="user_Id" ColumnName="user_Id" />
-                <ScalarProperty Name="user_proj_Id" ColumnName="user_proj_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="projects">
-            <EntityTypeMapping TypeName="jrj_dbModel.project">
-              <MappingFragment StoreEntitySet="project">
-                <ScalarProperty Name="pm_Id" ColumnName="pm_Id" />
-                <ScalarProperty Name="project_name" ColumnName="project_name" />
-                <ScalarProperty Name="project_number" ColumnName="project_number" />
-                <ScalarProperty Name="project_Id" ColumnName="project_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="jrj_dbModelStoreContainer" CdmEntityContainer="jrj_dbEntities">
+    <EntitySetMapping Name="co_log">
+      <EntityTypeMapping TypeName="IsTypeOf(jrj_dbModel.co_log)">
+        <MappingFragment StoreEntitySet="co_log">
+          <ScalarProperty Name="co_Id" ColumnName="co_Id" />
+          <ScalarProperty Name="project_Id" ColumnName="project_Id" />
+          <ScalarProperty Name="co_num" ColumnName="co_num" />
+          <ScalarProperty Name="proc" ColumnName="proc" />
+          <ScalarProperty Name="n_proc" ColumnName="n_proc" />
+          <ScalarProperty Name="gc_co" ColumnName="gc_co" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="owed" ColumnName="owed" />
+          <ScalarProperty Name="notes" ColumnName="notes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="IsTypeOf(jrj_dbModel.AspNetUser)">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="user_project">
+      <EntityTypeMapping TypeName="IsTypeOf(jrj_dbModel.user_project)">
+        <MappingFragment StoreEntitySet="user_project">
+          <ScalarProperty Name="user_proj_Id" ColumnName="user_proj_Id" />
+          <ScalarProperty Name="user_Id" ColumnName="user_Id" />
+          <ScalarProperty Name="project_Id" ColumnName="project_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="projects">
+      <EntityTypeMapping TypeName="IsTypeOf(jrj_dbModel.project)">
+        <MappingFragment StoreEntitySet="projects">
+          <ScalarProperty Name="project_Id" ColumnName="project_Id" />
+          <ScalarProperty Name="project_number" ColumnName="project_number" />
+          <ScalarProperty Name="project_name" ColumnName="project_name" />
+          <ScalarProperty Name="pm_Id" ColumnName="pm_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -327,7 +326,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

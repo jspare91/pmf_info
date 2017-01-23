@@ -235,6 +235,7 @@
       <DependentUpon>co_log.edmx</DependentUpon>
       <LastGenOutput>co_log.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\co_log.edmx.sql" />
     <Content Include="Models\co_log.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>co_log.edmx</DependentUpon>

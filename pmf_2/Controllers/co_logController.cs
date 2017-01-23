@@ -8,16 +8,20 @@ using System.Web;
 using System.Web.Mvc;
 using pmf_2.Models;
 
+
 namespace pmf_2.Controllers
 {
     public class co_logController : Controller
     {
         private jrj_dbEntities db = new jrj_dbEntities();
-        
-        public ActionResult Index( FormCollection collection, int? the_int_Id)  
+
+           
+           
+        public ActionResult Index( System.Web.Mvc.FormCollection collection, int? the_int_Id)  
         {
             if (collection.Count != 0)
             {
+                //InitializeIdentityForEF(db);
                 var the_cos = from n_mb in db.co_log select n_mb;
                 
                 var int_Id = Convert.ToInt32(collection[0]);
