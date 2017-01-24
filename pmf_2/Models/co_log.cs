@@ -6,7 +6,7 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
+using System.ComponentModel.DataAnnotations;
 namespace pmf_2.Models
 {
     using System;
@@ -14,14 +14,22 @@ namespace pmf_2.Models
     
     public partial class co_log
     {
+        
         public int co_Id { get; set; }
         public int project_Id { get; set; }
+        [Display(Name = "Our Change Order")]
         public string co_num { get; set; }
+        [Display(Name = "Proceeded")]
         public Nullable<int> proc { get; set; }
+        [Display(Name = "Not Proceeded")]
         public Nullable<int> n_proc { get; set; }
+        [Display(Name = "GC Change Order")]
         public string gc_co { get; set; }
+        [Display(Name = "Description")]
         public string description { get; set; }
+        [Display(Name = "Owed")]
         public Nullable<int> owed { get; set; }
+        [Display(Name = "Notes")]
         public string notes { get; set; }
     
         public virtual project project { get; set; }
